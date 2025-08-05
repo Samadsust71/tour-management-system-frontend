@@ -1,11 +1,11 @@
-import { Button } from "./components/ui/button";
+import { Outlet } from "react-router";
+import RootLayout from "./components/layout/RootLayout";
 
 function App() {
   return (
-    <>
-      <h1>tour management </h1>
-      <Button>Click Me</Button>
-    </>
+    <RootLayout>
+      <Outlet/>
+    </RootLayout>
   );
 }
 
