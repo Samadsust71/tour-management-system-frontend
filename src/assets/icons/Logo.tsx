@@ -1,5 +1,3 @@
-
-
 const Logo = () => {
   return (
     <svg
@@ -27,7 +25,7 @@ const Logo = () => {
         fill="#FFBC7D"
       ></path>{" "}
     </svg>
-  )
-}
+  );
+};
 
-export default Logo
+export default Logo;
