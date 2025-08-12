@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import config from "@/config";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
+import { useEffect, useState } from "react";
 import type { FieldValues, SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
@@ -20,15 +21,38 @@ export function LoginForm({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
+  const [role, setRole] = useState("user");
   const navigate = useNavigate();
+
   const form = useForm({
-    //! For development only
     defaultValues: {
-      email: "samadsust71@gmail.com",
-      password: "123456@Aa",
+      email: "",
+      password: "",
     },
   });
+
   const [login] = useLoginMutation();
+
+  // Update form defaults when role changes for development
+  useEffect(() => {
+    if (role === "user") {
+      form.reset({
+        email: "samadsust71@gmail.com",
+        password: "123456@Aa",
+      });
+    } else if (role === "admin") {
+      form.reset({
+        email: "superadmin@gmail.com",
+        password: "12345678",
+      });
+    } else {
+      form.reset({
+        email: "",
+        password: "",
+      });
+    }
+  }, [role, form]);
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await login(data).unwrap();
@@ -37,8 +61,8 @@ export function LoginForm({
         toast.success("Logged in successfully");
         navigate("/");
       }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err:any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
       console.error(err);
 
       if (err?.data?.message === "Password does not match") {
@@ -59,6 +83,28 @@ export function LoginForm({
         <p className="text-balance text-sm text-muted-foreground">
           Enter your email below to login to your account
         </p>
+
+        <div className="flex gap-2">
+          <Button
+            onClick={() => setRole("user")}
+            variant={role === "user" ? "default" : "outline"}
+          >
+            User
+          </Button>
+
+          <Button
+            onClick={() => setRole("admin")}
+            variant={role === "admin" ? "default" : "outline"}
+          >
+            Admin
+          </Button>
+          <Button
+            onClick={() => setRole("guide")}
+            variant={role === "guide" ? "default" : "outline"}
+          >
+            Guide
+          </Button>
+        </div>
       </div>
       <div className="grid gap-6">
         <Form {...form}>
@@ -70,11 +116,7 @@ export function LoginForm({
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="john@example.com"
-                      {...field}
-                      value={field.value || ""}
-                    />
+                    <Input placeholder="john@example.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -88,12 +130,7 @@ export function LoginForm({
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="********"
-                      {...field}
-                      value={field.value || ""}
-                    />
+                    <Input type="password" placeholder="********" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -112,7 +149,6 @@ export function LoginForm({
           </span>
         </div>
 
-        {/*//* http://localhost:5000/api/v1/auth/google */}
         <Button
           onClick={() => window.open(`${config.baseUrl}/auth/google`)}
           type="button"
