@@ -15,9 +15,10 @@ import { Trash } from "lucide-react";
 
 interface ConfirmDeleteDialogProps {
   onConfirm: () => void;
+  deleteType?:string
 }
 
-export function ConfirmDeleteDialog({ onConfirm }: ConfirmDeleteDialogProps) {
+export function ConfirmDeleteDialog({ onConfirm,deleteType }: ConfirmDeleteDialogProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -29,7 +30,7 @@ export function ConfirmDeleteDialog({ onConfirm }: ConfirmDeleteDialogProps) {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the tour type.
+            This action cannot be undone. This will permanently delete the {deleteType ||"tour type"}.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
