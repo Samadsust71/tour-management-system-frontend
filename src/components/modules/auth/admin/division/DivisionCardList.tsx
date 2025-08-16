@@ -67,6 +67,7 @@ export function DivisionCardList({
             <ConfirmDeleteDialog
               onConfirm={() => onDelete(division._id)}
               deleteType="division"
+              isIcon={false}
             />
           </CardFooter>
         </Card>

@@ -3,7 +3,7 @@ import {  useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
@@ -78,6 +78,8 @@ export function UpdateDivisionModal({ open, onClose, division, refetch }: Update
         <DialogHeader>
           <DialogTitle>Update Division</DialogTitle>
         </DialogHeader>
+         
+         <DialogDescription className="sr-only" >Update Division</DialogDescription>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

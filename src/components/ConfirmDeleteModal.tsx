@@ -16,14 +16,17 @@ import { Trash } from "lucide-react";
 interface ConfirmDeleteDialogProps {
   onConfirm: () => void;
   deleteType?:string
+  isIcon?:boolean
 }
 
-export function ConfirmDeleteDialog({ onConfirm,deleteType }: ConfirmDeleteDialogProps) {
+export function ConfirmDeleteDialog({ onConfirm,deleteType , isIcon=true}: ConfirmDeleteDialogProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button size="icon" variant="destructive">
-          <Trash/>
+        <Button size={isIcon?"icon":"default"} variant="destructive">
+         {
+           isIcon?<Trash/>:"Delete"
+         }
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
